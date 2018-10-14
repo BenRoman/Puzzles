@@ -1,0 +1,10 @@
+C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\bin\Debug\PuzzleDevCom.exe.config
+C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\bin\Debug\PuzzleDevCom.exe
+C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\bin\Debug\PuzzleDevCom.pdb
+C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\obj\Debug\PuzzleDevCom.csprojAssemblyReference.cache
+C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\obj\Debug\PuzzleDevCom.Form1.resources
+C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\obj\Debug\PuzzleDevCom.Properties.Resources.resources
+C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\obj\Debug\PuzzleDevCom.csproj.GenerateResource.cache
+C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\obj\Debug\PuzzleDevCom.csproj.CoreCompileInputs.cache
+C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\obj\Debug\PuzzleDevCom.exe
+C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\obj\Debug\PuzzleDevCom.pdb
