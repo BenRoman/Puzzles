@@ -30,7 +30,6 @@ namespace PuzzleDevCom
         public static Random RANDOM = new Random();
         public static int VerticalAmount = 2;
         public static int GorizontalAmount = 2;
-
         public static List<Cell> Puzzles = new List<Cell>();
         public static List<PictureBox> NewBoxList = new List<PictureBox>();
         public static Point MouseUpLocation;
@@ -40,9 +39,7 @@ namespace PuzzleDevCom
         {
             int aa = RANDOM.Next(0, VerticalAmount*GorizontalAmount);
             while (randomList.Contains(aa) && randomList.Count < VerticalAmount * GorizontalAmount)
-            {
                 aa = RANDOM.Next(0, VerticalAmount*GorizontalAmount);
-            }
             randomList.Add(aa);
             return aa;
         }
@@ -68,7 +65,6 @@ namespace PuzzleDevCom
             for (int i = 0; i < VerticalAmount; ++i)
             {
                 for (int j = 0; j < GorizontalAmount; ++j)
-                {
                     {
                         tmp = new PictureBox();
                         tmp.Name = $"picturebox{counter++}";
@@ -82,8 +78,6 @@ namespace PuzzleDevCom
 
                         Puzzles.Add(new Cell { Face = tmp, AmountOfRotations = 0 });
                     }
-                }
-
                 foreach (var item in Puzzles)
                 {
                     item.Face.Width = LinkPictureBox.Width / GorizontalAmount;
@@ -96,7 +90,6 @@ namespace PuzzleDevCom
             PictureBox newone;
             int counter = 0;
             for(int i = 0; i < GorizontalAmount; ++i)
-            {
                 for(int j = 0; j < VerticalAmount; ++j)
                 {
                     newone = new PictureBox();
@@ -108,14 +101,12 @@ namespace PuzzleDevCom
                     newone.Parent = this;
                     NewBoxList.Add(newone);
                 }
-            }
         }
         private void NecessaryBoxFinder( PictureBox Traveller)
         {
             bool Finder = false;
             Point tmp;
             foreach ( var item in NewBoxList)
-            {
                 if ( (item.Location.X < MouseUpLocation.X && (item.Location.X + item.Width)>MouseUpLocation.X)   && (item.Location.Y < MouseUpLocation.Y && (item.Location.Y + item.Height) > MouseUpLocation.Y)) {
                     tmp = item.Location;
                     item.Location = TravellerLocation;
@@ -123,11 +114,26 @@ namespace PuzzleDevCom
                     Finder = !Finder;
                     break;
                 }
-            }
             if (!Finder) 
                 Traveller.Location = new Point(TravellerLocation.X , TravellerLocation.Y);
         }
-
+        private static int CompareBoxesByLocation(Cell a, Cell b)
+        {
+            if (a.Face.Location.Y == b.Face.Location.Y)
+                return a.Face.Location.X.CompareTo(b.Face.Location.X);
+            return a.Face.Location.Y.CompareTo(b.Face.Location.Y); ;
+        }
+        public Image RotateImage(Image img)
+        {
+            var bmp = new Bitmap(img);
+            using (Graphics gfx = Graphics.FromImage(bmp))
+            {
+                gfx.Clear(Color.White);
+                gfx.DrawImage(img, 0, 0, img.Width, img.Height);
+            }
+            bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            return bmp;
+        }
 
         private void Mouse_Up(object sender, MouseEventArgs e)
         {
@@ -142,13 +148,11 @@ namespace PuzzleDevCom
             {
                 (sender as PictureBox).Image = RotateImage((sender as PictureBox).Image);
                 foreach( var item in Puzzles)
-                {
                     if (item.Face == (sender as PictureBox))
                     {
                         item.AmountOfRotations++;
                         break;
                     }
-                }
             }
         }
         private void Mouse_Move(object sender, MouseEventArgs e)
@@ -169,17 +173,12 @@ namespace PuzzleDevCom
             unsort.Visible = true;
             using (WebClient webClient = new WebClient())
             {
-            //string str = (ok == true) ? "+" : "-";
-            //https://images.wallpaperscraft.ru/image/fon_yarkiy_svet_oskolki_85568_1280x720.jpg
                 string str = LinkBox.Text.Trim()=="" ? "https://images.wallpaperscraft.ru/image/most_solnce_luchi_svet_utro_reka_park_skazka_48376_1280x720.jpg" : LinkBox.Text;
                 byte[] data = webClient.DownloadData(str);
-
                 using (MemoryStream mem = new MemoryStream(data))
                     IMG_FROM_LINK = Image.FromStream(mem);
                 LinkPictureBox.Image = IMG_FROM_LINK;
             }
-
-            //pictureBoxes.AddRange(new List<PictureBox> { pictureBox1, pictureBox2, pictureBox3, pictureBox4 });
             Split();
         }
         private void unsort_Click(object sender, EventArgs e)
@@ -198,14 +197,6 @@ namespace PuzzleDevCom
             auto.Visible = true;
             tips.Visible = true;
             NewPictureBoxGeneration();
-
-        }
-
-        private static int CompareBoxesByLocation(Cell a, Cell b)
-        {
-            if (a.Face.Location.Y == b.Face.Location.Y)
-                return a.Face.Location.X.CompareTo(b.Face.Location.X);
-            return a.Face.Location.Y.CompareTo(b.Face.Location.Y); ;
         }
         private void check_Click(object sender, EventArgs e)
         {
@@ -239,29 +230,12 @@ namespace PuzzleDevCom
                 Point tmp = NewBoxList[i].Location;
                 NewBoxList[i].Location = Puzzles[i].Face.Location;
                 Puzzles[i].Face.Location = tmp;
-                //MessageBox.Show(Puzzles[i].AmountOfRotations.ToString());
                 int RA = 4 - Puzzles[i].AmountOfRotations;
-                //MessageBox.Show(RA.ToString());
                 for (int j = 0; j < RA; ++j)
                     Puzzles[i].Face.Image = RotateImage(Puzzles[i].Face.Image);
                 Puzzles[i].AmountOfRotations += RA;
             }
         }
-        public Image RotateImage(Image img)
-        {
-            var bmp = new Bitmap(img);
-
-            using (Graphics gfx = Graphics.FromImage(bmp))
-            {
-                gfx.Clear(Color.White);
-                gfx.DrawImage(img, 0, 0, img.Width, img.Height);
-            }
-
-            bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            return bmp;
-        }
-
-
         private void tips_Click(object sender, EventArgs e)
         {
             tip1.Visible = !tip1.Visible;
