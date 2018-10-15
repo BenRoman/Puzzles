@@ -28,8 +28,9 @@ namespace PuzzleDevCom
         public static Image IMG_FROM_LINK;
         public static List<int> randomList = new List<int>();
         public static Random RANDOM = new Random();
-        public static int VerticalAmount = 2;
-        public static int GorizontalAmount = 2;
+        public static int VerticalAmount ;
+        public static int GorizontalAmount ;
+        public static int UpperBound;
         public static List<Cell> Puzzles = new List<Cell>();
         public static List<PictureBox> NewBoxList = new List<PictureBox>();
         public static Point MouseUpLocation;
@@ -37,9 +38,9 @@ namespace PuzzleDevCom
 
         public static int generator()
         {
-            int aa = RANDOM.Next(0, VerticalAmount*GorizontalAmount);
-            while (randomList.Contains(aa) && randomList.Count < VerticalAmount * GorizontalAmount)
-                aa = RANDOM.Next(0, VerticalAmount*GorizontalAmount);
+            int aa = RANDOM.Next(0, UpperBound);
+            while (randomList.Contains(aa) && randomList.Count < UpperBound)
+                aa = RANDOM.Next(0, UpperBound);
             randomList.Add(aa);
             return aa;
         }
@@ -84,6 +85,7 @@ namespace PuzzleDevCom
                     item.Face.Height = LinkPictureBox.Height / VerticalAmount;
                 }
             }
+            this.Size = new Size(520 + GorizontalAmount * (Puzzles[0].Face.Width + 3), 12 + (VerticalAmount + 1) * (Puzzles[0].Face.Height + 4));
         }
         private void NewPictureBoxGeneration()
         {
@@ -165,7 +167,23 @@ namespace PuzzleDevCom
         }
         private void OK_Click(object sender, EventArgs e)
         {
-            this.Size = new Size(860, 260);
+            try{
+                VerticalAmount = Convert.ToInt32(SizeBox.Text);
+                GorizontalAmount = Convert.ToInt32(SizeBox.Text);
+                if (VerticalAmount == 1)
+                {
+                    VerticalAmount++;
+                    GorizontalAmount++;
+                }
+            }
+            catch(Exception ex)
+            {
+                VerticalAmount = 6;
+                GorizontalAmount = 6;
+                MessageBox.Show(ex.Message);
+            }
+           
+            SizeBox.Visible = false;
             label1.Visible = false;
             LinkBox.Visible = false;
             OK.Visible = false;
@@ -183,13 +201,17 @@ namespace PuzzleDevCom
         }
         private void unsort_Click(object sender, EventArgs e)
         {
-            this.Size = new Size(860, 400);
-            foreach (var item in Puzzles)
+            this.Size = new Size(520 + GorizontalAmount * (Puzzles[0].Face.Width + 3), 300 + Puzzles.Count / VerticalAmount * (Puzzles[0].Face.Height + 3));
+
+            UpperBound = (this.Size.Width - 130) / (Puzzles[0].Face.Width + 10);
+            for(int item = 0; item < Puzzles.Count; ++item) 
             {
-                item.Face.Location = new Point(70 + generator() * (Puzzles[0].Face.Width + 10), 250);
-                item.AmountOfRotations = RANDOM.Next(0, 4);
-                for (int i = 0; i < item.AmountOfRotations ; ++i)
-                    item.Face.Image = RotateImage(item.Face.Image);
+                if (item % UpperBound == 0)
+                    randomList = new List<int>();
+                Puzzles[item].Face.Location = new Point(70 + generator() * (Puzzles[0].Face.Width + 10), 250 + (item / UpperBound + 1) * (Puzzles[0].Face.Height + 3));
+                Puzzles[item].AmountOfRotations = RANDOM.Next(0, 4);
+                for (int i = 0; i < Puzzles[item].AmountOfRotations ; ++i)
+                    Puzzles[item].Face.Image = RotateImage(Puzzles[item].Face.Image);
 
             }
             unsort.Visible = false;
@@ -202,7 +224,7 @@ namespace PuzzleDevCom
         {
             bool ableToCheck = true;
             foreach ( var item in Puzzles) {
-                if (item.Face.Location.Y + item.Face.Height > LinkPictureBox.Location.Y + LinkPictureBox.Height + 10)
+                if (item.Face.Location.Y + item.Face.Height > LinkPictureBox.Location.Y + LinkPictureBox.Height + VerticalAmount * 3) 
                 {
                     ableToCheck = false;
                     break;
@@ -239,6 +261,7 @@ namespace PuzzleDevCom
         private void tips_Click(object sender, EventArgs e)
         {
             tip1.Visible = !tip1.Visible;
+            tip2.Location = new Point(550, 20 + VerticalAmount * (Puzzles[0].Face.Height + 3));
             tip2.Visible = !tip2.Visible;
         }
     }

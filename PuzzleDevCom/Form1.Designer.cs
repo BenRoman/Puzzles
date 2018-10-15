@@ -35,6 +35,7 @@
             this.auto = new System.Windows.Forms.Button();
             this.tip1 = new System.Windows.Forms.Label();
             this.tip2 = new System.Windows.Forms.Label();
+            this.SizeBox = new System.Windows.Forms.TextBox();
             this.tips = new PuzzleDevCom.CircularButton();
             this.unsort = new PuzzleDevCom.CircularButton();
             this.OK = new PuzzleDevCom.CircularButton();
@@ -43,9 +44,9 @@
             // 
             // LinkBox
             // 
-            this.LinkBox.Location = new System.Drawing.Point(68, 52);
+            this.LinkBox.Location = new System.Drawing.Point(43, 52);
             this.LinkBox.Name = "LinkBox";
-            this.LinkBox.Size = new System.Drawing.Size(377, 20);
+            this.LinkBox.Size = new System.Drawing.Size(215, 20);
             this.LinkBox.TabIndex = 0;
             // 
             // LinkPictureBox
@@ -61,11 +62,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(199, 20);
+            this.label1.Location = new System.Drawing.Point(101, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 13);
+            this.label1.Size = new System.Drawing.Size(267, 13);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Give me image URL";
+            this.label1.Text = "Give me image URL                   and                NxN size";
             // 
             // check
             // 
@@ -110,6 +111,13 @@
             this.tip2.Text = "DRAG AND DROP puzzles into free cells";
             this.tip2.Visible = false;
             // 
+            // SizeBox
+            // 
+            this.SizeBox.Location = new System.Drawing.Point(315, 52);
+            this.SizeBox.Name = "SizeBox";
+            this.SizeBox.Size = new System.Drawing.Size(65, 20);
+            this.SizeBox.TabIndex = 17;
+            // 
             // tips
             // 
             this.tips.Location = new System.Drawing.Point(395, 89);
@@ -134,7 +142,7 @@
             // 
             // OK
             // 
-            this.OK.Location = new System.Drawing.Point(467, 20);
+            this.OK.Location = new System.Drawing.Point(431, 20);
             this.OK.Name = "OK";
             this.OK.Size = new System.Drawing.Size(53, 52);
             this.OK.TabIndex = 12;
@@ -147,7 +155,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(541, 92);
+            this.ClientSize = new System.Drawing.Size(507, 87);
+            this.Controls.Add(this.SizeBox);
             this.Controls.Add(this.tips);
             this.Controls.Add(this.tip2);
             this.Controls.Add(this.tip1);
@@ -178,6 +187,7 @@
         private System.Windows.Forms.Label tip1;
         private System.Windows.Forms.Label tip2;
         private CircularButton tips;
+        private System.Windows.Forms.TextBox SizeBox;
     }
 }
 
