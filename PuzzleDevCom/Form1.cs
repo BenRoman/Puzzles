@@ -244,7 +244,7 @@ namespace PuzzleDevCom
                     }
                 }
             }
-            string str = (ableToCheck == true) ? "+" : "-";
+            string str = (ableToCheck == true) ? "Congratulations !!" : "Keep trying ..";
             MessageBox.Show(str);
         }
         private void auto_Click(object sender, EventArgs e)
