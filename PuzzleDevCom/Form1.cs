@@ -202,15 +202,15 @@ namespace PuzzleDevCom
         private void unsort_Click(object sender, EventArgs e)
         {
             this.Size = new Size(520 + GorizontalAmount * (Puzzles[0].Face.Width + 3), 300 + Puzzles.Count / VerticalAmount * (Puzzles[0].Face.Height + 3));
-
             UpperBound = (this.Size.Width - 130) / (Puzzles[0].Face.Width + 10);
-            for(int item = 0; item < Puzzles.Count; ++item) 
+            for (int item = 0; item < Puzzles.Count; ++item)
             {
                 if (item % UpperBound == 0)
                     randomList = new List<int>();
                 Puzzles[item].Face.Location = new Point(70 + generator() * (Puzzles[0].Face.Width + 10), 250 + (item / UpperBound + 1) * (Puzzles[0].Face.Height + 3));
-                Puzzles[item].AmountOfRotations = RANDOM.Next(0, 4);
-                for (int i = 0; i < Puzzles[item].AmountOfRotations ; ++i)
+                int RA = RANDOM.Next(0, 4);
+                Puzzles[item].AmountOfRotations += RA;
+                for (int i = 0; i < RA; ++i)
                     Puzzles[item].Face.Image = RotateImage(Puzzles[item].Face.Image);
 
             }
@@ -252,7 +252,7 @@ namespace PuzzleDevCom
                 Point tmp = NewBoxList[i].Location;
                 NewBoxList[i].Location = Puzzles[i].Face.Location;
                 Puzzles[i].Face.Location = tmp;
-                int RA = 4 - Puzzles[i].AmountOfRotations;
+                int RA = 4 - Puzzles[i].AmountOfRotations % 4 ;
                 for (int j = 0; j < RA; ++j)
                     Puzzles[i].Face.Image = RotateImage(Puzzles[i].Face.Image);
                 Puzzles[i].AmountOfRotations += RA;
