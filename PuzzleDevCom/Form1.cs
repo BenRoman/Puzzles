@@ -72,7 +72,6 @@ namespace PuzzleDevCom
                         tmp.SizeMode = PictureBoxSizeMode.StretchImage;
                         tmp.Location = new Point(500 + j * (LinkPictureBox.Width / GorizontalAmount + 3),12 + i * (LinkPictureBox.Height / VerticalAmount + 3));
                         tmp.Parent = this;
-                        //tmp.MouseDown += new MouseEventHandler(this.Mouse_Down);
                         tmp.MouseMove += new MouseEventHandler(this.Mouse_Move);
                         tmp.MouseUp += new MouseEventHandler(this.Mouse_Up);
                         tmp.MouseDown += new MouseEventHandler(this.Mouse_Down);
@@ -139,6 +138,9 @@ namespace PuzzleDevCom
 
         private void Mouse_Up(object sender, MouseEventArgs e)
         {
+            foreach (var item in Puzzles)
+                if (item.Face.Location.Y + item.Face.Height < tip2.Location.Y)
+                    auto.Visible = false;
             if (e.Button == MouseButtons.Left)
                 MouseUpLocation = new Point(e.X + (sender as PictureBox).Left, e.Y + (sender as PictureBox).Top);
             NecessaryBoxFinder((sender as PictureBox));
