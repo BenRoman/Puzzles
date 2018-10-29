@@ -8,3 +8,13 @@ C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\obj\Debug\PuzzleDevCom.csp
 C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\obj\Debug\PuzzleDevCom.exe
 C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\obj\Debug\PuzzleDevCom.pdb
 C:\Users\rombe\source\repos\PuzzleDevCom\PuzzleDevCom\obj\Debug\PuzzleDevCom.csprojAssemblyReference.cache
+E:\VS\Puzzles\PuzzleDevCom\bin\Debug\PuzzleDevCom.exe.config
+E:\VS\Puzzles\PuzzleDevCom\bin\Debug\PuzzleDevCom.exe
+E:\VS\Puzzles\PuzzleDevCom\bin\Debug\PuzzleDevCom.pdb
+E:\VS\Puzzles\PuzzleDevCom\obj\Debug\PuzzleDevCom.Form1.resources
+E:\VS\Puzzles\PuzzleDevCom\obj\Debug\PuzzleDevCom.Properties.Resources.resources
+E:\VS\Puzzles\PuzzleDevCom\obj\Debug\PuzzleDevCom.csproj.GenerateResource.cache
+E:\VS\Puzzles\PuzzleDevCom\obj\Debug\PuzzleDevCom.csproj.CoreCompileInputs.cache
+E:\VS\Puzzles\PuzzleDevCom\obj\Debug\PuzzleDevCom.exe
+E:\VS\Puzzles\PuzzleDevCom\obj\Debug\PuzzleDevCom.pdb
+E:\VS\Puzzles\PuzzleDevCom\obj\Debug\PuzzleDevCom.csprojAssemblyReference.cache

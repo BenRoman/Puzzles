@@ -36,6 +36,7 @@
             this.tip1 = new System.Windows.Forms.Label();
             this.tip2 = new System.Windows.Forms.Label();
             this.SizeBox = new System.Windows.Forms.TextBox();
+            this.second_auto = new System.Windows.Forms.Button();
             this.tips = new PuzzleDevCom.CircularButton();
             this.unsort = new PuzzleDevCom.CircularButton();
             this.OK = new PuzzleDevCom.CircularButton();
@@ -118,6 +119,17 @@
             this.SizeBox.Size = new System.Drawing.Size(65, 20);
             this.SizeBox.TabIndex = 17;
             // 
+            // second_auto
+            // 
+            this.second_auto.Location = new System.Drawing.Point(386, 185);
+            this.second_auto.Name = "second_auto";
+            this.second_auto.Size = new System.Drawing.Size(75, 23);
+            this.second_auto.TabIndex = 18;
+            this.second_auto.Text = "second auto";
+            this.second_auto.UseVisualStyleBackColor = true;
+            this.second_auto.Visible = false;
+            this.second_auto.Click += new System.EventHandler(this.second_auto_Click);
+            // 
             // tips
             // 
             this.tips.Location = new System.Drawing.Point(395, 89);
@@ -155,7 +167,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(507, 87);
+            this.ClientSize = new System.Drawing.Size(533, 88);
+            this.Controls.Add(this.second_auto);
             this.Controls.Add(this.SizeBox);
             this.Controls.Add(this.tips);
             this.Controls.Add(this.tip2);
@@ -188,6 +201,7 @@
         private System.Windows.Forms.Label tip2;
         private CircularButton tips;
         private System.Windows.Forms.TextBox SizeBox;
+        private System.Windows.Forms.Button second_auto;
     }
 }
 

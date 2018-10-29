@@ -25,17 +25,19 @@ namespace PuzzleDevCom
             public PictureBox Face;
             public int AmountOfRotations;
         }
+        #region fields
         public static Image IMG_FROM_LINK;
         public static List<int> randomList = new List<int>();
         public static Random RANDOM = new Random();
-        public static int VerticalAmount ;
-        public static int GorizontalAmount ;
+        public static int VerticalAmount;
+        public static int GorizontalAmount;
         public static int UpperBound;
         public static List<Cell> Puzzles = new List<Cell>();
         public static List<PictureBox> NewBoxList = new List<PictureBox>();
         public static Point MouseUpLocation;
         public static Point TravellerLocation;
-
+        public Rectangle rect;
+        #endregion
         public static int generator()
         {
             int aa = RANDOM.Next(0, UpperBound);
@@ -48,7 +50,6 @@ namespace PuzzleDevCom
         {
             PuzzleBuilderAndRefact();
             Bitmap originalImage = new Bitmap(IMG_FROM_LINK);
-            Rectangle rect;
             Bitmap PartOfOriginal = originalImage;
             int counter = 0;
             for (int i = 0; i < VerticalAmount; ++i)
@@ -58,6 +59,7 @@ namespace PuzzleDevCom
                     PartOfOriginal = originalImage.Clone(rect, originalImage.PixelFormat);
                     Puzzles[counter++].Face.Image = PartOfOriginal;
                 }
+
         }
         private void PuzzleBuilderAndRefact()
         {
@@ -66,57 +68,58 @@ namespace PuzzleDevCom
             for (int i = 0; i < VerticalAmount; ++i)
             {
                 for (int j = 0; j < GorizontalAmount; ++j)
-                    {
-                        tmp = new PictureBox();
-                        tmp.Name = $"picturebox{counter++}";
-                        tmp.SizeMode = PictureBoxSizeMode.StretchImage;
-                        tmp.Location = new Point(500 + j * (LinkPictureBox.Width / GorizontalAmount + 3),12 + i * (LinkPictureBox.Height / VerticalAmount + 3));
-                        tmp.Parent = this;
-                        tmp.MouseMove += new MouseEventHandler(this.Mouse_Move);
-                        tmp.MouseUp += new MouseEventHandler(this.Mouse_Up);
-                        tmp.MouseDown += new MouseEventHandler(this.Mouse_Down);
-
-                        Puzzles.Add(new Cell { Face = tmp, AmountOfRotations = 0 });
-                    }
-                foreach (var item in Puzzles)
                 {
-                    item.Face.Width = LinkPictureBox.Width / GorizontalAmount;
-                    item.Face.Height = LinkPictureBox.Height / VerticalAmount;
+                    tmp = new PictureBox();
+                    tmp.Name = $"picturebox{counter++}";
+                    tmp.SizeMode = PictureBoxSizeMode.StretchImage;
+                    tmp.Location = new Point(500 + j * (LinkPictureBox.Width / GorizontalAmount + 3), 12 + i * (LinkPictureBox.Height / VerticalAmount + 3));
+                    tmp.Parent = this;
+                    tmp.MouseMove += new MouseEventHandler(this.Mouse_Move);
+                    tmp.MouseUp += new MouseEventHandler(this.Mouse_Up);
+                    tmp.MouseDown += new MouseEventHandler(this.Mouse_Down);
+                    Puzzles.Add(new Cell { Face = tmp, AmountOfRotations = 0 });
                 }
             }
+            foreach (var item in Puzzles)
+            {
+                item.Face.Width = LinkPictureBox.Width / GorizontalAmount;
+                item.Face.Height = LinkPictureBox.Height / VerticalAmount;
+            }
+
             this.Size = new Size(520 + GorizontalAmount * (Puzzles[0].Face.Width + 3), 12 + (VerticalAmount + 1) * (Puzzles[0].Face.Height + 4));
         }
         private void NewPictureBoxGeneration()
         {
             PictureBox newone;
             int counter = 0;
-            for(int i = 0; i < GorizontalAmount; ++i)
-                for(int j = 0; j < VerticalAmount; ++j)
+            for (int i = 0; i < GorizontalAmount; ++i)
+                for (int j = 0; j < VerticalAmount; ++j)
                 {
                     newone = new PictureBox();
                     newone.Size = Puzzles[0].Face.Size;
                     newone.SizeMode = PictureBoxSizeMode.StretchImage;
-                    newone.Location = new Point(500 + j * (Puzzles[0].Face.Width + 3 ), 12 + i * (Puzzles[0].Face.Height + 3));
+                    newone.Location = new Point(500 + j * (Puzzles[0].Face.Width + 3), 12 + i * (Puzzles[0].Face.Height + 3));
                     newone.BackColor = Color.White;
                     newone.Name = $"picturebox{counter++}";
                     newone.Parent = this;
                     NewBoxList.Add(newone);
                 }
         }
-        private void NecessaryBoxFinder( PictureBox Traveller)
+        private void NecessaryBoxFinder(PictureBox Traveller)
         {
             bool Finder = false;
             Point tmp;
-            foreach ( var item in NewBoxList)
-                if ( (item.Location.X < MouseUpLocation.X && (item.Location.X + item.Width)>MouseUpLocation.X)   && (item.Location.Y < MouseUpLocation.Y && (item.Location.Y + item.Height) > MouseUpLocation.Y)) {
+            foreach (var item in NewBoxList)
+                if ((item.Location.X < MouseUpLocation.X && (item.Location.X + item.Width) > MouseUpLocation.X) && (item.Location.Y < MouseUpLocation.Y && (item.Location.Y + item.Height) > MouseUpLocation.Y))
+                {
                     tmp = item.Location;
                     item.Location = TravellerLocation;
                     Traveller.Location = tmp;
                     Finder = !Finder;
                     break;
                 }
-            if (!Finder) 
-                Traveller.Location = new Point(TravellerLocation.X , TravellerLocation.Y);
+            if (!Finder)
+                Traveller.Location = new Point(TravellerLocation.X, TravellerLocation.Y);
         }
         private static int CompareBoxesByLocation(Cell a, Cell b)
         {
@@ -135,7 +138,7 @@ namespace PuzzleDevCom
             bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
             return bmp;
         }
-
+        #region events
         private void Mouse_Up(object sender, MouseEventArgs e)
         {
             foreach (var item in Puzzles)
@@ -148,10 +151,10 @@ namespace PuzzleDevCom
         private void Mouse_Down(object sender, MouseEventArgs e)
         {
             TravellerLocation = new Point((sender as PictureBox).Left, (sender as PictureBox).Top);
-            if(e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
             {
                 (sender as PictureBox).Image = RotateImage((sender as PictureBox).Image);
-                foreach( var item in Puzzles)
+                foreach (var item in Puzzles)
                     if (item.Face == (sender as PictureBox))
                     {
                         item.AmountOfRotations++;
@@ -169,7 +172,8 @@ namespace PuzzleDevCom
         }
         private void OK_Click(object sender, EventArgs e)
         {
-            try{
+            try
+            {
                 VerticalAmount = Convert.ToInt32(SizeBox.Text);
                 GorizontalAmount = Convert.ToInt32(SizeBox.Text);
                 if (VerticalAmount == 1)
@@ -178,13 +182,13 @@ namespace PuzzleDevCom
                     GorizontalAmount++;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 VerticalAmount = 6;
                 GorizontalAmount = 6;
                 MessageBox.Show(ex.Message);
             }
-           
+
             SizeBox.Visible = false;
             label1.Visible = false;
             LinkBox.Visible = false;
@@ -193,7 +197,7 @@ namespace PuzzleDevCom
             unsort.Visible = true;
             using (WebClient webClient = new WebClient())
             {
-                string str = LinkBox.Text.Trim()=="" ? "https://images.wallpaperscraft.ru/image/most_solnce_luchi_svet_utro_reka_park_skazka_48376_1280x720.jpg" : LinkBox.Text;
+                string str = LinkBox.Text.Trim() == "" ? "https://images.wallpaperscraft.ru/image/most_solnce_luchi_svet_utro_reka_park_skazka_48376_1280x720.jpg" : LinkBox.Text;
                 byte[] data = webClient.DownloadData(str);
                 using (MemoryStream mem = new MemoryStream(data))
                     IMG_FROM_LINK = Image.FromStream(mem);
@@ -214,19 +218,22 @@ namespace PuzzleDevCom
                 Puzzles[item].AmountOfRotations += RA;
                 for (int i = 0; i < RA; ++i)
                     Puzzles[item].Face.Image = RotateImage(Puzzles[item].Face.Image);
+                Puzzles[item].Face.Image.Save($@"..\Bitmaps\{item}.png");
 
             }
             unsort.Visible = false;
             check.Visible = true;
             auto.Visible = true;
+            second_auto.Visible = true;
             tips.Visible = true;
             NewPictureBoxGeneration();
         }
         private void check_Click(object sender, EventArgs e)
         {
             bool ableToCheck = true;
-            foreach ( var item in Puzzles) {
-                if (item.Face.Location.Y + item.Face.Height > LinkPictureBox.Location.Y + LinkPictureBox.Height + VerticalAmount * 3) 
+            foreach (var item in Puzzles)
+            {
+                if (item.Face.Location.Y + item.Face.Height > LinkPictureBox.Location.Y + LinkPictureBox.Height + VerticalAmount * 3)
                 {
                     ableToCheck = false;
                     break;
@@ -254,7 +261,7 @@ namespace PuzzleDevCom
                 Point tmp = NewBoxList[i].Location;
                 NewBoxList[i].Location = Puzzles[i].Face.Location;
                 Puzzles[i].Face.Location = tmp;
-                int RA = 4 - Puzzles[i].AmountOfRotations % 4 ;
+                int RA = 4 - Puzzles[i].AmountOfRotations % 4;
                 for (int j = 0; j < RA; ++j)
                     Puzzles[i].Face.Image = RotateImage(Puzzles[i].Face.Image);
                 Puzzles[i].AmountOfRotations += RA;
@@ -265,6 +272,113 @@ namespace PuzzleDevCom
             tip1.Visible = !tip1.Visible;
             tip2.Location = new Point(550, 20 + VerticalAmount * (Puzzles[0].Face.Height + 3));
             tip2.Visible = !tip2.Visible;
+        }
+        #endregion
+        private bool Compare(Bitmap bmp1, Bitmap bmp2)
+        {
+            bool equals = true;
+            bool flag = true;  //Inner loop isn't broken
+
+            //Test to see if we have the same size of image
+            if (bmp1.Size == bmp2.Size)
+            {
+                for (int x = 0; x < bmp1.Width; ++x)
+                {
+                    for (int y = 0; y < bmp1.Height; ++y)
+                    {
+                        if (bmp1.GetPixel(x, y) != bmp2.GetPixel(x, y))
+                        {
+                            equals = false;
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (!flag)
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                equals = false;
+            }
+            return equals;
+        }
+
+        private void second_auto_Click(object sender, EventArgs e)
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            Bitmap originalImage = new Bitmap(IMG_FROM_LINK);
+            Bitmap PartOfOriginal;
+
+            List<Bitmap> arrOfpuzzles = new List<Bitmap>();
+            for (int i = 0; i < VerticalAmount * GorizontalAmount; ++i)
+                arrOfpuzzles.Add(new Bitmap(Image.FromFile($@"..\Bitmaps\{i}.png")));
+
+            //int counter = 0;
+            string text = "";
+            bool found;
+            List<Bitmap> ListOfSortedAndRotatedPuzzles = new List<Bitmap>();
+            for (int i = 0; i < VerticalAmount; ++i)
+            {
+                for (int j = 0; j < GorizontalAmount; ++j)
+                {
+                    rect = new Rectangle(j * originalImage.Width / GorizontalAmount, i * originalImage.Height / VerticalAmount, originalImage.Width / GorizontalAmount, originalImage.Height / VerticalAmount);
+                    PartOfOriginal = originalImage.Clone(rect, originalImage.PixelFormat);
+                    found = false;
+                    for (int k = 0; k < arrOfpuzzles.Count; ++k)
+                    {
+                        for (int q = 0; q < 4; ++q)
+                        {
+                            if (Compare(arrOfpuzzles[k], PartOfOriginal))
+                            {
+                                ListOfSortedAndRotatedPuzzles.Add(PartOfOriginal);
+                                arrOfpuzzles.Remove(arrOfpuzzles[k]);
+                                found = true;
+                                break;
+                            }
+                            else
+                                arrOfpuzzles[k] = new Bitmap(RotateImage(arrOfpuzzles[k]));
+                        }
+                        if (found)
+                            break;
+                    }
+                }
+            }
+            PictureBox tmp;
+            int counter = 0;
+            for (int i = 0; i < VerticalAmount; ++i)
+            {
+                for (int j = 0; j < GorizontalAmount; ++j)
+                {
+                    tmp = new PictureBox();
+                    tmp.SizeMode = PictureBoxSizeMode.StretchImage;
+                    tmp.Location = new Point(900 + j * (LinkPictureBox.Width / GorizontalAmount + 3), 12 + i * (LinkPictureBox.Height / VerticalAmount + 3));
+                    tmp.Parent = this;
+                    tmp.Image = ListOfSortedAndRotatedPuzzles[counter++];
+                    tmp.Width = LinkPictureBox.Width / GorizontalAmount;
+                    tmp.Height = LinkPictureBox.Height / VerticalAmount;
+                }
+            }
+            this.Size = new Size(520 + GorizontalAmount * (Puzzles[0].Face.Width + 3), 12 + (VerticalAmount + 1) * (Puzzles[0].Face.Height + 4));
+
+            //counter = 0;
+            //for (int i = 0; i < VerticalAmount; ++i)
+            //{
+            //    for (int j = 0; j < GorizontalAmount; ++j)
+            //    {
+            //        rect = new Rectangle(j * originalImage.Width / GorizontalAmount, i * originalImage.Height / VerticalAmount, originalImage.Width / GorizontalAmount, originalImage.Height / VerticalAmount);
+            //        PartOfOriginal = originalImage.Clone(rect, originalImage.PixelFormat);
+            //        text += Compare(ListOfSortedAndRotatedPuzzles[counter++], PartOfOriginal) + " ";
+            //    }
+            //    text += "\n";
+            //}
+            //watch.Stop();
+            //var elapsedMs = watch.ElapsedMilliseconds;
+            //text += elapsedMs;
+            //MessageBox.Show(text.ToString());
+            this.Width += 500;
         }
     }
 }
